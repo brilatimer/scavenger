@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ClueFormList from "./ClueFormList";
+
     import {
       Button,
       Modal,
@@ -53,6 +55,10 @@ import React, { Component } from "react";
                     placeholder="Player's Phone Number"
                   />
                 </FormGroup>
+                <ClueFormList
+                  activeItemClues={this.state.activeItem.clues}
+                  // updateCluesCallback={this.updateCluesCallback}
+                />
               </Form>
             </ModalBody>
             <ModalFooter>

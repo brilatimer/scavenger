@@ -9,6 +9,7 @@ class App extends Component {
       activeItem: {
         players_phone_number: "",
         game_title: "",
+        clues: [],
       },
       scavengerList: []
     };
@@ -80,7 +81,7 @@ class App extends Component {
       .then(res => this.refreshList());
   };
   createItem = () => {
-    const item = { players_phone_number: "", game_title: "", completed: false };
+    const item = { players_phone_number: "", game_title: "", clues: [] };
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
   editItem = item => {
