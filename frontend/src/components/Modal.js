@@ -30,39 +30,28 @@ import React, { Component } from "react";
         const { toggle, onSave } = this.props;
         return (
           <Modal isOpen={true} toggle={toggle}>
-            <ModalHeader toggle={toggle}> Todo Item </ModalHeader>
+            <ModalHeader toggle={toggle}> New Scavenger Hunt </ModalHeader>
             <ModalBody>
               <Form>
                 <FormGroup>
-                  <Label for="title">Title</Label>
+                  <Label for="title">Game Title</Label>
                   <Input
                     type="text"
-                    name="title"
-                    value={this.state.activeItem.title}
+                    name="game_title"
+                    defaultValue={this.state.activeItem.game_title}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo Title"
+                    placeholder="Game Title"
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="description">Description</Label>
+                  <Label for="description">Player's Phone Number</Label>
                   <Input
                     type="text"
-                    name="description"
-                    value={this.state.activeItem.description}
+                    name="players_phone_number"
+                    defaultValue={this.state.activeItem.players_phone_number}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo description"
+                    placeholder="Player's Phone Number"
                   />
-                </FormGroup>
-                <FormGroup check>
-                  <Label for="completed">
-                    <Input
-                      type="checkbox"
-                      name="completed"
-                      checked={this.state.activeItem.completed}
-                      onChange={this.handleChange}
-                    />
-                    Completed
-                  </Label>
                 </FormGroup>
               </Form>
             </ModalBody>
