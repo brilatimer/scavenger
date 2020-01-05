@@ -16,11 +16,18 @@ class ScavengerSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
       clues_data = validated_data.pop('clues')
       scavenger_hunt = ScavengerHunt.objects.create(**validated_data)
+      
       for clue_data in clues_data:
-          clue.objects.create(scavenge=scavenger_hunt, **clue_data)
+          clue = Clue.objects.create()
+          scavenger_hunt.clues.add(clue)
+          clue.question = clue_data.get('question', '')
+          clue.answer = clue_data.get('answer', '')
+          clue.hint = clue_data.get('hint', '')
+          clue.save()
       return scavenger_hunt
     
   def update(self, instance, validated_data):
+      # import pdb; pdb.set_trace()
       clues_data = validated_data.pop('clues')
       clues = (instance.clues).all()
       clues = list(clues)
@@ -29,10 +36,15 @@ class ScavengerSerializer(serializers.ModelSerializer):
       instance.save()
 
       for clue_data in clues_data:
-          clue = clues.pop(0)
-          clue.question = clue_data.get('question', clue.question)
-          clue.answer = clue_data.get('answer', clue.answer)
-          clue.hint = clue_data.get('hint', clue.hint)
+          clue = None
+          if len(clues) > 0:
+            clue = clues.pop(0)
+          else:
+            clue = Clue.objects.create()
+            instance.clues.add(clue)
+          clue.question = clue_data.get('question', '')
+          clue.answer = clue_data.get('answer', '')
+          clue.hint = clue_data.get('hint', '')
           clue.save()
       return instance
   
