@@ -31,6 +31,8 @@ import ClueFormList from "./ClueFormList";
         this.setState({ activeItem });
       }
 
+
+
       render() {
         const { toggle, onSave } = this.props;
         return (
@@ -61,8 +63,11 @@ import ClueFormList from "./ClueFormList";
                 <ClueFormList
                   activeItemClues={this.state.activeItem.clues}
                   updateCluesCallback={this.updateCluesCallback}
+
                 />
               </Form>
+
+
             </ModalBody>
             <ModalFooter>
               <Button color="success" onClick={() => onSave(this.state.activeItem)}>
