@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 // import './styles/ClueFormList.css';
-
 import {
   Button,
   Modal,
@@ -13,48 +12,63 @@ import {
   Label
 } from "reactstrap";
 
-const ClueFormList = (props) => {
-  const clueElements = props.activeItemClues.map((clue, i) => {
+export default class ClueFormList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItemClues: this.props.activeItemClues
+    };
+  }
 
+handleChange = e => {
+  let { name, value } = e.target;
+  let index = e.target.id.split("+")[0];
+  const clues = [ ...this.state.activeItemClues];
+  clues[index][name]=value;
+  // activeItemClues[e.target.id][name] = value;
+  this.setState({ activeItemClues: clues});
+  this.props.updateCluesCallback(clues);
+  };
+
+clueElements = this.props.activeItemClues.map((clue, i) => {
+  
     return (
-
       <div>
       <Label for="name">Question {i + 1}</Label>
       <Input
-      
+      id={`${i}+question`}
       type="text"
       name="question"
       defaultValue={clue.question}
-      // onChange={this.handleChange}
+      onChange={this.handleChange}
       placeholder="Question"
 />
       <Label for="name">Answer</Label>
       <Input
+      id={`${i}+answer`}
       type="text"
       name="answer"
       defaultValue={clue.answer}
-      // onChange={this.handleChange}
+      onChange={this.handleChange}
       placeholder="Answer"
 />
       <Label for="name">Hint</Label>
       <Input
+      id={`${i}+hint`}
       type="text"
       name="hint"
       defaultValue={clue.hint}
-      // onChange={this.handleChange}
+      onChange={this.handleChange}
       placeholder="Hint"
     />
     </div>
-    
 );
   });
 
+  render() {
   return (
     <div className="clueElements">
-      <div>{clueElements}</div>
+      <div>{this.clueElements}</div>
     </div>
   );
-}
-
-
-export default ClueFormList;
+}}

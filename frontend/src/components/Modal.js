@@ -22,12 +22,15 @@ import ClueFormList from "./ClueFormList";
       }
       handleChange = e => {
         let { name, value } = e.target;
-        if (e.target.type === "checkbox") {
-          value = e.target.checked;
-        }
         const activeItem = { ...this.state.activeItem, [name]: value };
         this.setState({ activeItem });
       };
+
+      updateCluesCallback = updatedClues => {
+        const activeItem = { ...this.state.activeItem, clues: updatedClues };
+        this.setState({ activeItem });
+      }
+
       render() {
         const { toggle, onSave } = this.props;
         return (
@@ -57,7 +60,7 @@ import ClueFormList from "./ClueFormList";
                 </FormGroup>
                 <ClueFormList
                   activeItemClues={this.state.activeItem.clues}
-                  // updateCluesCallback={this.updateCluesCallback}
+                  updateCluesCallback={this.updateCluesCallback}
                 />
               </Form>
             </ModalBody>

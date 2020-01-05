@@ -12,10 +12,27 @@ class ScavengerSerializer(serializers.ModelSerializer):
   class Meta:
     model = ScavengerHunt
     fields = ('id','players_phone_number', 'game_title', 'clues')
+      
+  def create(self, validated_data):
+      clues_data = validated_data.pop('clues')
+      scavenger_hunt = ScavengerHunt.objects.create(**validated_data)
+      for clue_data in clues_data:
+          clue.objects.create(scavenge=scavenger_hunt, **clue_data)
+      return scavenger_hunt
     
-def create(self, validated_data):
-    clues_data = validated_data.pop('clues')
-    scavenger_hunt = ScavengerHunt.objects.create(**validated_data)
-    for clue_data in clues_data:
-        clue.objects.create(scavenge=scavenger_hunt, **clue_data)
-    return scavenger_hunt
+  def update(self, instance, validated_data):
+      clues_data = validated_data.pop('clues')
+      clues = (instance.clues).all()
+      clues = list(clues)
+      instance.players_phone_number = validated_data.get('players_phone_number', instance.players_phone_number)
+      instance.game_title = validated_data.get('game_title', instance.game_title)
+      instance.save()
+
+      for clue_data in clues_data:
+          clue = clues.pop(0)
+          clue.question = clue_data.get('question', clue.question)
+          clue.answer = clue_data.get('answer', clue.answer)
+          clue.hint = clue_data.get('hint', clue.hint)
+          clue.save()
+      return instance
+  
