@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Tutorial: add this
 # class Todo(models.Model):
@@ -20,6 +21,8 @@ class ScavengerHunt(models.Model):
   players_phone_number = models.CharField(max_length=100)
   game_title = models.CharField(max_length=200)
   clues = models.ManyToManyField(Clue)
+  owner = models.ForeignKey(User, related_name="scavenger_hunt",
+          on_delete=models.CASCADE, null=True)
 
 def __str__(self):
   return self.game_title

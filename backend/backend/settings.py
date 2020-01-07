@@ -40,6 +40,7 @@ INSTALLED_APPS = [
         'django.contrib.staticfiles',
         'corsheaders',            # add this
         'rest_framework',         # add this  
+        'knox',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,7 @@ STATIC_URL = '/static/'
 # )
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}
