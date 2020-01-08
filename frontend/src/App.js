@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
 import axios from "axios";
+import {auth} from "./actions";
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +31,6 @@ class App extends Component {
     );
   };
   renderItems = () => {
-    console.log(this.state.scavengerList);
     return this.state.scavengerList.map(item => (
       <li
         key={item.id}
@@ -88,6 +88,7 @@ class App extends Component {
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
   render() {
+    console.log(auth.login("user1", "hunter2"));
     return (
       <main className="content">
         <h1 className="text-black text-uppercase text-center my-4">
@@ -120,4 +121,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;
