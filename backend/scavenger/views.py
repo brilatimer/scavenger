@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
 from rest_framework import viewsets          
 from .serializers import ScavengerSerializer, ClueSerializer
 from .models import ScavengerHunt, Clue    
@@ -6,7 +6,11 @@ from rest_framework import viewsets, permissions, generics
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from django.contrib.auth.decorators import login_required 
 
+@login_required
+def index(request):
+    return redirect("http://localhost:3000") 
           
 class ScavengerView(viewsets.ModelViewSet):       
     serializer_class = ScavengerSerializer          

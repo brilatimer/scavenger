@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './App.css';
 import Modal from "./components/Modal";
 import axios from "axios";
 import {auth} from "./actions";
@@ -88,7 +89,6 @@ class App extends Component {
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
   render() {
-    console.log(auth.login("user1", "hunter2"));
     return (
       <main className="content">
         <h1 className="text-black text-uppercase text-center my-4">
@@ -97,7 +97,8 @@ class App extends Component {
         </h1>
         <div className="row ">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
+            <div className="card p-3"> 
+            <a className="logout-link" href="http://localhost:8000/accounts/logout">logout</a>
               <div className="">
                 <button onClick={this.createItem} className="btn btn-primary">
                   New Scavenger Hunt
