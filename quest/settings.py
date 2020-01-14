@@ -32,12 +32,15 @@ SECRET_KEY = 'm6n1g!apl3(-w(mb$ql6_(p(74su184!*(eej-3ylo01!59785'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ENVIRONMENT = 'local'
+
 import socket
 if socket.gethostname() == 'Briannas-MBP-2':
    ALLOWED_HOSTS = []
 else:
     HTTP_HOST = ['quack-quest.herokuapp.com']
     ALLOWED_HOSTS = ['quack-quest.herokuapp.com']
+    ENVIRONMENT = 'production'
 
 
 # Application definition
@@ -177,3 +180,5 @@ try:
 except:
     pass
 # This is new
+
+REACT_APP_DIR = '/frontend'

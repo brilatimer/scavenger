@@ -7,11 +7,39 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
 from django.contrib.auth.decorators import login_required 
+from django.conf import settings
 
-@login_required
-def index(request):
-    return redirect("http://localhost:3000") 
-          
+# @login_required
+# def index(request):
+#     # if settings.ENVIRONMENT == 'local':
+#     return redirect("http://localhost:3000") 
+#     # else:
+#     #     return redirect("http://localhost:3000")
+
+from django.views.generic import View
+from django.http import HttpResponse
+import os    
+class FrontendAppView(View):
+    """
+    Serves the compiled frontend entry point (only works if you have run `yarn
+    run build`).
+    """
+
+    def get(self, request):
+        try:
+            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            return redirect("http://localhost:3000") 
+            # return HttpResponse(
+            #     """
+            #     This URL is only used when you have built the production
+            #     version of the app. Visit http://localhost:3000/ instead, or
+            #     run `yarn run build` to test the production version.
+            #     """,
+            #     status=501,
+            # )
+            
 class ScavengerView(viewsets.ModelViewSet):       
     serializer_class = ScavengerSerializer          
     queryset = ScavengerHunt.objects.all()              

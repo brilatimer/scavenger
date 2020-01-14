@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework import routers                    
 from scavenger import views 
 from django.contrib.auth import views as auth_views
-
+from django.contrib.auth.decorators import login_required
 
 router = routers.DefaultRouter()                      
 router.register(r'scavenger', views.ScavengerView, 'scavenger')     
@@ -11,7 +11,8 @@ router.register(r'clue', views.ClueView, 'clue')
 # router.register(r'register', views.RegistrationAPI, 'register')  
 
 urlpatterns = [
-    path('',views.index),
+    # path('',views.index),
+    path('', login_required(views.FrontendAppView.as_view())),
     path('admin/', admin.site.urls),         
     path('api/', include(router.urls)),
     path('api/auth/', include('knox.urls')),
