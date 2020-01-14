@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+        'whitenoise.middleware.WhiteNoiseMiddleware',
         'corsheaders.middleware.CorsMiddleware',    # add this
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
@@ -131,6 +132,10 @@ STATIC_URL = '/static/'
 import os
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+
 # we whitelist localhost:3000 because that's where frontend will be served
 
 # CORS_ORIGIN_WHITELIST = (
@@ -146,3 +151,4 @@ REST_FRAMEWORK = {
 # LOGIN_URL = 'login' 
 # LOGOUT_URL = 'logout'
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
