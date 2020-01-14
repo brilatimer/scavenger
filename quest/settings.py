@@ -150,7 +150,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+if ENVIRONMENT == 'local':
+    REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+else:
+    REACT_APP_DIR = BASE_DIR
+    
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
