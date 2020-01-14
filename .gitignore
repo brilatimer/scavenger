@@ -4,3 +4,4 @@
 backend/static
 quest/static
 db.sqlite3
+.env
