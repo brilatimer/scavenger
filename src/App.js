@@ -21,7 +21,7 @@ class App extends Component {
   }
   refreshList = () => {
     axios
-      .get("http://localhost:8000/api/scavenger/")
+      .get("/api/scavenger/")
       .then(res => this.setState({ scavengerList: res.data }))
       .catch(err => console.log(err));
   };
@@ -68,17 +68,17 @@ class App extends Component {
     this.toggle();
     if (item.id) {
       axios
-        .put(`http://localhost:8000/api/scavenger/${item.id}/`, item)
+        .put(`/api/scavenger/${item.id}/`, item)
         .then(res => this.refreshList());
       return;
     }
     axios
-      .post("http://localhost:8000/api/scavenger/", item)
+      .post("/api/scavenger/", item)
       .then(res => this.refreshList());
   };
   handleDelete = item => {
     axios
-      .delete(`http://localhost:8000/api/scavenger/${item.id}`)
+      .delete(`/api/scavenger/${item.id}`)
       .then(res => this.refreshList());
   };
   createItem = () => {
@@ -98,7 +98,7 @@ class App extends Component {
         <div className="row ">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3"> 
-            <a className="logout-link" href="http://localhost:8000/accounts/logout">logout</a>
+            <a className="logout-link" href="/accounts/logout">logout</a>
               <div className="">
                 <button onClick={this.createItem} className="btn btn-primary">
                   New Scavenger Hunt
