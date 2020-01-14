@@ -25,7 +25,9 @@ SECRET_KEY = 'm6n1g!apl3(-w(mb$ql6_(p(74su184!*(eej-3ylo01!59785'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+HTTP_HOST = ['quack-quest.herokuapp.com']
+
+ALLOWED_HOSTS = ['quack-quest.herokuapp.com']
 
 
 # Application definition
