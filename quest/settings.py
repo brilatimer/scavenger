@@ -25,9 +25,12 @@ SECRET_KEY = 'm6n1g!apl3(-w(mb$ql6_(p(74su184!*(eej-3ylo01!59785'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-HTTP_HOST = ['quack-quest.herokuapp.com']
-
-ALLOWED_HOSTS = ['quack-quest.herokuapp.com']
+import socket
+if socket.gethostname() == 'Briannas-MBP-2':
+   ALLOWED_HOSTS = []
+else:
+    HTTP_HOST = ['quack-quest.herokuapp.com']
+    ALLOWED_HOSTS = ['quack-quest.herokuapp.com']
 
 
 # Application definition
@@ -127,14 +130,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # we whitelist localhost:3000 because that's where frontend will be served
 
@@ -151,4 +157,4 @@ REST_FRAMEWORK = {
 # LOGIN_URL = 'login' 
 # LOGOUT_URL = 'logout'
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
