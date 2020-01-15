@@ -54,7 +54,7 @@ def validate_twilio_request(f):
             return HttpResponseForbidden()
     return decorated_function
 
-# @validate_twilio_request
+@validate_twilio_request
 @require_POST
 @csrf_exempt
 def sms(request):
