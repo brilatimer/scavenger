@@ -13,6 +13,7 @@ router.register(r'clue', views.ClueView, 'clue')
 urlpatterns = [
     # path('',views.index),
     path('', login_required(views.FrontendAppView.as_view())),
+    path('sms/', views.sms),
     path('admin/', admin.site.urls),         
     path('api/', include(router.urls)),
     path('api/auth/', include('knox.urls')),
