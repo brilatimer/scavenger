@@ -189,7 +189,7 @@ except:
 
 
 
-twilio_account_sid = os.getenv('TWILIO_ACCOUNT_SID', 'AC54450e35c4ac9014a109a3b3f34ac0fb')
-twilio_auth_token = os.getenv('TWILIO_AUTH_TOKEN', 'd5f2f183ce43b89a1ffeba11906c0d81')
-twilio_number = os.getenv('TWILIO_NUMBER', '+19314633580')
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID', 'AC54450e35c4ac9014a109a3b3f34ac0fb')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN', 'd5f2f183ce43b89a1ffeba11906c0d81')
+TWILIO_NUMBER = os.getenv('TWILIO_NUMBER', '+19314633580')
 
