@@ -27,3 +27,9 @@ class ScavengerHunt(models.Model):
 def __str__(self):
   return self.game_title
 
+class Player(models.Model):
+  players_phone_number = models.CharField(max_length=100, blank=True)
+  scavenger_hunt = models.ForeignKey(ScavengerHunt,
+              on_delete=models.CASCADE, null=True)
+  which_clue = models.IntegerField(default = 0)
+ 

@@ -120,8 +120,8 @@ class App extends Component {
     this.launchToggle();
     if (item.id) {
       axios
-        .put(BASE_URL + `api/scavenger/${item.id}/`, item)
-        .then(res => this.refreshList());
+        .put(BASE_URL + `api/start_game/${item.id}/`, item)
+        // .then(res => this.refreshList());
       return;
     }
     // axios

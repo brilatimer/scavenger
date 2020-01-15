@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect 
 from rest_framework import viewsets          
 from .serializers import ScavengerSerializer, ClueSerializer
-from .models import ScavengerHunt, Clue    
+from .models import ScavengerHunt, Clue, Player   
 from rest_framework import viewsets, permissions, generics
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
 from django.contrib.auth.decorators import login_required 
 from django.conf import settings
+import json
+from twilio.rest import Client
 
 # @login_required
 # def index(request):
@@ -29,7 +31,6 @@ from django.views.decorators.http import require_POST
 
 from functools import wraps
 from twilio.request_validator import RequestValidator
-
 
 
 def validate_twilio_request(f):
@@ -69,6 +70,26 @@ def sms(request):
 
     # Return the TwiML
     return HttpResponse(resp)
+
+@csrf_exempt
+def start_game(request, scavenger_id):
+    scavenger = ScavengerHunt.objects.get(pk=scavenger_id)
+    content = json.loads(request.body)
+    phone_number = content['players_phone_number']
+
+    account_sid = settings.TWILIO_ACCOUNT_SID
+    auth_token = settings.TWILIO_AUTH_TOKEN
+    client = Client(account_sid, auth_token)
+
+    message = client.messages \
+    .create(
+        body=scavenger.clues.all()[0], # always send the first clue
+        from_=settings.TWILIO_NUMBER,
+        to=phone_number
+    )
+    Player.objects.create(players_phone_number= phone_number, scavenger_hunt= scavenger, which_clue= 0)
+
+    return HttpResponse()
 
 class FrontendAppView(View):
     """

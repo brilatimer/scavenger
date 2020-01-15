@@ -37,7 +37,7 @@ import React, { Component } from "react";
                   <Input
                     type="text"
                     name="players_phone_number"
-                    defaultValue={this.state.activeItem.players_phone_number}
+                    defaultValue=""
                     onChange={this.handleChange}
                     placeholder="(xxx) xxx - xxxx"
                   />
