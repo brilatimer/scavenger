@@ -18,7 +18,22 @@ from django.conf import settings
 
 from django.views.generic import View
 from django.http import HttpResponse
-import os    
+import os
+
+from twilio import twiml
+
+
+
+def sms(request):
+    # print(request)
+    (twilio_number, twilio_account_sid, twilio_auth_token) = settings.load_twilio_config()
+    # resp = twiml.Response()
+
+    # # Add a message
+    # resp.message("The Robots are coming! Head for the hills!")
+
+    return str(request.POST)
+
 class FrontendAppView(View):
     """
     Serves the compiled frontend entry point (only works if you have run `yarn
