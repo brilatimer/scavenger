@@ -23,17 +23,25 @@ import os
 from twilio import twiml
 
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 
-def sms(request):
-    # print(request)
-    # (twilio_number, twilio_account_sid, twilio_auth_token) = settings.load_twilio_config()
-    # resp = twiml.Response()
+@require_POST
+@csrf_exempt
+@validate_twilio_request
+def incoming_message(request):
+    """Twilio Messaging URL - receives incoming messages from Twilio"""
+    # Create a new TwiML response
+    resp = twiml.Response()
 
-    # # Add a message
-    # resp.message("The Robots are coming! Head for the hills!")
+    # <Message> a text back to the person who texted us
+    body = "Your text to me was {0} characters long. Webhooks are neat :)" \
+        .format(len(request.POST['Body']))
+    resp.message(body)
 
-    return JsonResponse(request.POST)
+    # Return the TwiML
+    return HttpResponse(resp)
 
 class FrontendAppView(View):
     """
