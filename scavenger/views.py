@@ -21,6 +21,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 import os
 
 from twilio import twiml
+from twilio.twiml.messaging_response import Message, MessagingResponse
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -59,7 +60,7 @@ def validate_twilio_request(f):
 def sms(request):
     """Twilio Messaging URL - receives incoming messages from Twilio"""
     # Create a new TwiML response
-    resp = twiml.Response()
+    resp = MessagingResponse()
 
     # <Message> a text back to the person who texted us
     body = "Your text to me was {0} characters long. Webhooks are neat :)" \
