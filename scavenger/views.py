@@ -53,9 +53,9 @@ def validate_twilio_request(f):
             return HttpResponseForbidden()
     return decorated_function
 
+# @validate_twilio_request
 @require_POST
 @csrf_exempt
-@validate_twilio_request
 def sms(request):
     """Twilio Messaging URL - receives incoming messages from Twilio"""
     # Create a new TwiML response
