@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import './App.css';
 import Modal from "./components/Modal";
+import LaunchModal from "./components/LaunchModal";
 import axios from "axios";
 import {auth} from "./actions";
+
+var BASE_URL = '/';
+if (window.location.href.indexOf("3000") > -1) {
+  BASE_URL = "http://localhost:8000/"
+}
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+      
+ 
     this.state = {
       activeItem: {
         players_phone_number: "",
@@ -21,7 +30,7 @@ class App extends Component {
   }
   refreshList = () => {
     axios
-      .get("/api/scavenger/")
+      .get(BASE_URL + "api/scavenger/")
       .then(res => this.setState({ scavengerList: res.data }))
       .catch(err => console.log(err));
   };
@@ -44,9 +53,18 @@ class App extends Component {
           {item.game_title}
         </span>
         <span>
+
+        <button
+            onClick={() => this.launchItem(item)}
+            className="btn btn-success mr-2"
+          >
+            {" "}
+            Launch{" "}
+          </button>
+
           <button
             onClick={() => this.editItem(item)}
-            className="btn btn-secondary mr-2"
+            className="btn btn-info mr-2"
           >
             {" "}
             Edit{" "}
@@ -68,17 +86,18 @@ class App extends Component {
     this.toggle();
     if (item.id) {
       axios
-        .put(`/api/scavenger/${item.id}/`, item)
+        .put(BASE_URL + `api/scavenger/${item.id}/`, item)
         .then(res => this.refreshList());
       return;
     }
     axios
-      .post("/api/scavenger/", item)
+      .post(BASE_URL + "api/scavenger/", item)
       .then(res => this.refreshList());
   };
+
   handleDelete = item => {
     axios
-      .delete(`/api/scavenger/${item.id}`)
+      .delete(BASE_URL + `api/scavenger/${item.id}`)
       .then(res => this.refreshList());
   };
   createItem = () => {
@@ -88,6 +107,28 @@ class App extends Component {
   editItem = item => {
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
+
+  launchToggle = () => {
+    this.setState({ launchModal: !this.state.launchModal });
+  };
+
+  launchItem = item => {
+    this.setState({ activeItem: item, launchModal: !this.state.launchModal });
+  };
+
+  handleLaunchStart = item => {
+    this.launchToggle();
+    if (item.id) {
+      axios
+        .put(BASE_URL + `api/scavenger/${item.id}/`, item)
+        .then(res => this.refreshList());
+      return;
+    }
+    // axios
+    //   .post("api/scavenger/", item)
+    //   .then(res => this.refreshList());
+  };
+
   render() {
     return (
       <main className="content">
@@ -98,7 +139,7 @@ class App extends Component {
         <div className="row ">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3"> 
-            <a className="logout-link" href="/accounts/logout">logout</a>
+            <a className="logout-link" href={BASE_URL + "accounts/logout"}>logout</a>
               <div className="">
                 <button onClick={this.createItem} className="btn btn-primary">
                   New Scavenger Hunt
@@ -118,6 +159,15 @@ class App extends Component {
             onSave={this.handleSubmit}
           />
         ) : null}
+
+{this.state.launchModal ? (
+          <LaunchModal
+            activeItem={this.state.activeItem}
+            toggle={this.launchToggle}
+            onSave={this.handleLaunchStart}
+          />
+        ) : null}
+
       </main>
     );
   }

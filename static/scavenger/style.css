@@ -2,7 +2,7 @@
 body {
   font: 13px/20px &quot;Lucida Grande&quot;, Tahoma, Verdana, sans-serif;
   color: #404040;
-  background: #0ca3d2;
+  background: #fdff85;
 }
 
 .container {
@@ -24,7 +24,7 @@ body {
 .login h1 {
   margin: -20px -20px 21px;
   line-height: 40px;
-  font-size: 25px;
+  font-size: 15px;
   font-weight: bold;
   color: #555;
   text-align: center;

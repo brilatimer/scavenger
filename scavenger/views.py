@@ -26,6 +26,9 @@ class FrontendAppView(View):
     """
 
     def get(self, request):
+        if settings.ENVIRONMENT == 'local':
+            return redirect("http://localhost:3000") 
+        
         try:
             with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
                 return HttpResponse(f.read())
