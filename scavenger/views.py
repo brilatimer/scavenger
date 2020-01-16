@@ -62,10 +62,18 @@ def sms(request):
     """Twilio Messaging URL - receives incoming messages from Twilio"""
     # Create a new TwiML response
     resp = MessagingResponse()
+    
+    
+    text_body = request.POST['Body'].lower() # contents of the sms, but lower case
+    phone_number = request.POST['From']
+    if text_body == "hint":
+        resp.message(phone_number)
+        return HttpResponse(resp)
+
 
     # <Message> a text back to the person who texted us
     body = "Your text to me was {0} characters long. Webhooks are neat :)" \
-        .format(len(request.POST['Body']))
+        .format(len(text_body))
     resp.message(body)
 
     # Return the TwiML
