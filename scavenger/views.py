@@ -91,10 +91,20 @@ def start_game(request, scavenger_id):
 
     message = client.messages \
     .create(
+        body="""
+        Welcome to C12's Capstone Demo at Amazon! If you get lost, type "Hint". To move onto the next question, type "Next".
+        """,
+        from_=settings.TWILIO_NUMBER,
+        to=phone_number
+    )
+    
+    message = client.messages \
+    .create(
         body=scavenger.clues.all()[0], # always send the first clue
         from_=settings.TWILIO_NUMBER,
         to=phone_number
     )
+
     Player.objects.create(players_phone_number= phone_number, scavenger_hunt= scavenger, which_clue= 0)
 
     return HttpResponse()

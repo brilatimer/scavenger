@@ -3,7 +3,7 @@ from .models import ScavengerHunt, Clue, Player
 
 
 class ScavengerAdmin(admin.ModelAdmin):
-  list_display = ('players_phone_number', 'game_title') 
+  list_display = ('game_title',) 
 
 admin.site.register(ScavengerHunt, ScavengerAdmin) 
 

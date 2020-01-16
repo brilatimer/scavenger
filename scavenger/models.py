@@ -18,7 +18,7 @@ class ScavengerHunt(models.Model):
   # Who created the scavanager hunt
   # user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True,)
   # Phone number of person playing the game
-  players_phone_number = models.CharField(max_length=100, blank=True)
+  # players_phone_number = models.CharField(max_length=100, blank=True)
   game_title = models.CharField(max_length=200)
   clues = models.ManyToManyField(Clue)
   owner = models.ForeignKey(User, related_name="scavenger_hunt",

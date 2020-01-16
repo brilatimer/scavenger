@@ -41,7 +41,7 @@ class ScavengerSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = ScavengerHunt
-    fields = ('id','players_phone_number', 'game_title', 'clues')
+    fields = ('id', 'game_title', 'clues')
       
   def create(self, validated_data):
       clues_data = validated_data.pop('clues')
@@ -61,7 +61,7 @@ class ScavengerSerializer(serializers.ModelSerializer):
       clues_data = validated_data.pop('clues')
       clues = (instance.clues).all()
       clues = list(clues)
-      instance.players_phone_number = validated_data.get('players_phone_number', instance.players_phone_number)
+      # instance.players_phone_number = validated_data.get('players_phone_number', instance.players_phone_number)
       instance.game_title = validated_data.get('game_title', instance.game_title)
       instance.save()
 
