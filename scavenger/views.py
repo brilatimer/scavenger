@@ -63,13 +63,13 @@ def sms(request):
     # Create a new TwiML response
     resp = MessagingResponse()
     
-    
     text_body = request.POST['Body'].lower() # contents of the sms, but lower case
     phone_number = request.POST['From']
+    player = Player.objects.get(players_phone_number=phone_number) 
     if text_body == "hint":
-        resp.message(phone_number)
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        resp.message(clue)
         return HttpResponse(resp)
-
 
     # <Message> a text back to the person who texted us
     body = "Your text to me was {0} characters long. Webhooks are neat :)" \
