@@ -68,8 +68,13 @@ def sms(request):
     player = Player.objects.get(players_phone_number=phone_number) 
     if text_body == "hint":
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
-        resp.message(clue)
+        resp.message(clue.hint)
         return HttpResponse(resp)
+    if text_body == "next":
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        resp.message(clue.answer)
+        return HttpResponse(resp)
+
 
     # <Message> a text back to the person who texted us
     body = "Your text to me was {0} characters long. Webhooks are neat :)" \
@@ -100,7 +105,7 @@ def start_game(request, scavenger_id):
     
     message = client.messages \
     .create(
-        body=scavenger.clues.all()[0], # always send the first clue
+        body=scavenger.clues.all()[0].question, # always send the first clue's question
         from_=settings.TWILIO_NUMBER,
         to=phone_number
     )
