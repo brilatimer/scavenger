@@ -72,7 +72,16 @@ def sms(request):
         return HttpResponse(resp)
     if text_body == "next":
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
-        resp.message(clue.answer)
+        answer = clue.answer
+        player.which_clue += 1 # increment to next clue
+        player.save() # save changes to database
+        
+        # edge case if no more clues
+        if player.which_clue >= len(player.scavenger_hunt.clues.all()):
+            resp.message("The answer was: " + answer + "\n You've completed the C12 Scavenger Hunt! Thanks for participating!")
+            return HttpResponse(resp)
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        resp.message("The answer was: " + answer + "\n" + clue.question)
         return HttpResponse(resp)
 
 
