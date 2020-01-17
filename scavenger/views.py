@@ -71,7 +71,22 @@ def sms(request):
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
         resp.message(clue.hint)
         return HttpResponse(resp)
-    
+
+    # if user types 'next' gives current clue answer as well as next clue question
+    if text_body == "next":
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        answer = clue.answer
+        player.which_clue += 1 # increment to next clue
+        player.save() # save changes to database
+        
+        # edge case if no more clues
+        if player.which_clue >= len(player.scavenger_hunt.clues.all()):
+            resp.message("The answer was: " + answer + "\n You've completed the C12 Scavenger Hunt! Thanks for participating!")
+            return HttpResponse(resp)
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        resp.message("The answer was: " + answer + "\n" + clue.question)
+        return HttpResponse(resp)
+
     clue = player.scavenger_hunt.clues.all()[player.which_clue]
     if text_body != clue.answer.lower(): 
         resp.message("Not quite, try again or ask for a hint.")
@@ -90,22 +105,6 @@ def sms(request):
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
         resp.message("You got it! The next clue is: " + clue.question)
         return HttpResponse(resp)
-
-    # if user types 'next' gives current clue answer as well as next clue question
-    if text_body == "next":
-        clue = player.scavenger_hunt.clues.all()[player.which_clue]
-        answer = clue.answer
-        player.which_clue += 1 # increment to next clue
-        player.save() # save changes to database
-        
-        # edge case if no more clues
-        if player.which_clue >= len(player.scavenger_hunt.clues.all()):
-            resp.message("The answer was: " + answer + "\n You've completed the C12 Scavenger Hunt! Thanks for participating!")
-            return HttpResponse(resp)
-        clue = player.scavenger_hunt.clues.all()[player.which_clue]
-        resp.message("The answer was: " + answer + "\n" + clue.question)
-        return HttpResponse(resp)
-
 
     # <Message> a text back to the person who texted us
     body = "Your text to me was {0} characters long. Webhooks are neat :)" \
