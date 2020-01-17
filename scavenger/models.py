@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import re
 # Tutorial: add this
 # class Todo(models.Model):
 #   title = models.CharField(max_length=120)
@@ -33,3 +33,12 @@ class Player(models.Model):
               on_delete=models.CASCADE, null=True)
   which_clue = models.IntegerField(default = 0)
  
+  # override behavior of save to apply a custom format to phone number input
+  def save(self, *args, **kwargs): 
+    self.players_phone_number = "+1" + self.get_numbers(self.players_phone_number) 
+    super(Player, self).save(*args, **kwargs) 
+    
+  def get_numbers(self, text):
+    phone_regex = re.compile(r"(\d{3})\s*?(\d{3})\s*?(\d{4})")
+    groups = phone_regex.findall(text)
+    return "".join(groups[0])
