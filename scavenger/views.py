@@ -73,12 +73,12 @@ def sms(request):
         return HttpResponse(resp)
     
     clue = player.scavenger_hunt.clues.all()[player.which_clue]
-    if text_body != clue.answer: 
+    if text_body != clue.answer.lower(): 
         resp.message("Not quite, try again or ask for a hint.")
         return HttpResponse(resp)
     
     clue = player.scavenger_hunt.clues.all()[player.which_clue]
-    if text_body == clue.answer: 
+    if text_body == clue.answer.lower(): 
         player.which_clue += 1 # increment to next clue
         player.save()
         

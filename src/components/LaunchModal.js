@@ -39,7 +39,7 @@ import React, { Component } from "react";
                     name="players_phone_number"
                     defaultValue=""
                     onChange={this.handleChange}
-                    placeholder="+1xxx xxx xxxx"
+                    placeholder="(xxx) xxx - xxxx"
                   />
                 </FormGroup>
               </Form>
