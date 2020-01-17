@@ -62,14 +62,36 @@ def sms(request):
     """Twilio Messaging URL - receives incoming messages from Twilio"""
     # Create a new TwiML response
     resp = MessagingResponse()
-    
     text_body = request.POST['Body'].lower() # contents of the sms, but lower case
     phone_number = request.POST['From']
     player = Player.objects.get(players_phone_number=phone_number) 
+    
+    # if user types 'hint' gives hint to current clue
     if text_body == "hint":
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
         resp.message(clue.hint)
         return HttpResponse(resp)
+    
+    clue = player.scavenger_hunt.clues.all()[player.which_clue]
+    if text_body != clue.answer: 
+        resp.message("Not quite, try again or ask for a hint.")
+        return HttpResponse(resp)
+    
+    clue = player.scavenger_hunt.clues.all()[player.which_clue]
+    if text_body == clue.answer: 
+        player.which_clue += 1 # increment to next clue
+        player.save()
+        
+        # edge case if there are no more clues
+        if player.which_clue >= len(player.scavenger_hunt.clues.all()):
+            resp.message("You've completed the C12 Scavenger Hunt! Thanks for participating!")
+            return HttpResponse(resp)
+
+        clue = player.scavenger_hunt.clues.all()[player.which_clue]
+        resp.message("You got it! The next clue is: " + clue.question)
+        return HttpResponse(resp)
+
+    # if user types 'next' gives current clue answer as well as next clue question
     if text_body == "next":
         clue = player.scavenger_hunt.clues.all()[player.which_clue]
         answer = clue.answer
