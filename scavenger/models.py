@@ -34,9 +34,9 @@ class Player(models.Model):
   which_clue = models.IntegerField(default = 0)
  
   # override behavior of save to apply a custom format to phone number input
-  def save(self, *args, **kwargs): 
-    self.players_phone_number = self.get_numbers(self.players_phone_number) 
+  def save(self, *args, **kwargs):
     if "+1" not in self.players_phone_number:
+      self.players_phone_number = self.get_numbers(self.players_phone_number) 
       self.players_phone_number = "+1" + self.players_phone_number
     super(Player, self).save(*args, **kwargs) 
     
