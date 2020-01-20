@@ -132,14 +132,15 @@ class App extends Component {
   render() {
     return (
       <main className="content">
-        <h1 className="text-black text-uppercase text-center my-4">
-          quest
-          <img src="https://cdn.clipart.email/fec5d675df1c0a4bc31fac155efad05a_cute-duck-clipart-6-clipart-station_610-612.jpeg" alt="secretary bird" width="50" height="50"></img>
-        </h1>
-        <div className="row ">
+        
+        <div className="row">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3"> 
-            <a className="logout-link" href={BASE_URL + "accounts/logout"}>logout</a>
+            <h1 className="text-black text-uppercase text-center my-4">
+              quest
+              <img src="https://cdn.clipart.email/fec5d675df1c0a4bc31fac155efad05a_cute-duck-clipart-6-clipart-station_610-612.jpeg" alt="secretary bird" width="50" height="50"></img>
+            </h1>
+            <a className="logout-link" href={BASE_URL + "accounts/logout"}>Logout</a>
               <div className="">
                 <button onClick={this.createItem} className="btn btn-primary">
                   New Scavenger Hunt
