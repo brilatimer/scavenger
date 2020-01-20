@@ -34,7 +34,7 @@ DEBUG = True
 ENVIRONMENT = 'local'
 
 import socket
-if socket.gethostname() == 'Briannas-MBP-2':
+if socket.gethostname() == 'Briannas-MacBook-Pro-2.local':
    ALLOWED_HOSTS = []
 else:
     HTTP_HOST = ['quack-quest.herokuapp.com']

@@ -41,6 +41,4 @@ class Player(models.Model):
     super(Player, self).save(*args, **kwargs) 
     
   def get_numbers(self, text):
-    phone_regex = re.compile(r"(\d{3})\s*?(\d{3})\s*?(\d{4})")
-    groups = phone_regex.findall(text)
-    return "".join(groups[0])
+    return ''.join([x for x in text if x.isdigit()])
