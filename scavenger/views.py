@@ -32,7 +32,6 @@ from django.views.decorators.http import require_POST
 from functools import wraps
 from twilio.request_validator import RequestValidator
 
-
 def validate_twilio_request(f):
     """Validates that incoming requests genuinely originated from Twilio"""
     @wraps(f)
@@ -62,7 +61,7 @@ def sms(request):
     """Twilio Messaging URL - receives incoming messages from Twilio"""
     # Create a new TwiML response
     resp = MessagingResponse()
-    text_body = request.POST['Body'].lower() # contents of the sms, but lower case
+    text_body = request.POST['Body'].lower().strip() # contents of the sms, but lower case
     phone_number = request.POST['From']
     player = Player.objects.get(players_phone_number=phone_number) 
     
@@ -88,12 +87,12 @@ def sms(request):
         return HttpResponse(resp)
 
     clue = player.scavenger_hunt.clues.all()[player.which_clue]
-    if text_body != clue.answer.lower(): 
+    if text_body != clue.answer.lower().strip(): 
         resp.message("Not quite, try again or ask for a hint.")
         return HttpResponse(resp)
     
     clue = player.scavenger_hunt.clues.all()[player.which_clue]
-    if text_body == clue.answer.lower(): 
+    if text_body == clue.answer.lower().strip(): 
         player.which_clue += 1 # increment to next clue
         player.save()
         
