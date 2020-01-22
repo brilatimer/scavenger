@@ -13,7 +13,7 @@ Deployed with [Heroku](https://dashboard.heroku.com/apps).
 3. Setup React
 4. Install dependencies with npm install.
 5. Start server with npm start.
-6. Python3 manage.py runserver. This will now be accessible at http://localhost:3000/
+6. Run: python3 manage.py runserver. This will now be accessible at http://localhost:3000/
 7. In the project directory, you can run the following prompts: yarn    test, yarn start, yarn build
 8. Import dependancies
 9. Sign up or login to your Twilio account and create an access token for the API. Authenticate the REST API. Claim a Twilio personal number to be the sender.
