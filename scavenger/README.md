@@ -13,11 +13,10 @@ Deployed with [Heroku](https://dashboard.heroku.com/apps).
 3. Setup React
 4. Install dependencies with npm install.
 5. Start server with npm start.
-6. In the project directory, you can run the following prompts: yarn test, yarn start, yarn build
-  
+6. In the project directory, you can run the following prompts: yarn    test, yarn start, yarn build
 7. Import dependancies
 8. Sign up or login to your Twilio account and create an access token for the API. Authenticate the REST API. Claim a Twilio personal number to be the sender.
 9. Setup Heroku app server and deploy
 10. Enjoy Scavenger!
 
-Scavenger was developed by Bri Latimer as a capstone project for [Ada Developers Academy](https://adadevelopersacademy.org/).
+_**Scavenger was developed by Bri Latimer as a capstone project for [Ada Developers Academy](https://adadevelopersacademy.org/).**_
